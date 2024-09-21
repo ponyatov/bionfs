@@ -60,7 +60,7 @@ doc:
 
 .PHONY: doxy
 doxy: .doxygen
-	rm -rf docs ; doxygen $< 
+	rm -rf docs ; doxygen $< 1> /dev/null
 
 # install
 .PHONY: install update ref gz
