@@ -1,7 +1,7 @@
 # `bionfs`
 ## self-treatment file system for NAND storage
 
-(c) Dmitry Ponyatov <dponyatov@gmail.com> 2024 MIT
+(c) Dmitry Ponyatov <<dponyatov@gmail.com>> 2024 MIT
 
 github: https://github.com/ponyatov/bionfs
 
@@ -9,8 +9,9 @@ github: https://github.com/ponyatov/bionfs
 
 - wear leveling
 - continuous background check & recovery
+- data mirroring
 
 ## build variants
 
 - Linux FUSE for development and testing
-- MCU embedded build variant (Cortex-M)
+- MCU embedded build (Cortex-M)

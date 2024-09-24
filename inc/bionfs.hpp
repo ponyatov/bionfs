@@ -20,23 +20,39 @@ extern void arg(int argc, char argv[]);
 
 /// @}
 
-/// @defgroup fuse FUSE
-/// @brief @ref fuse.h
+/// @defgroup fuse fuse
+/// @brief `libfuse`
 ///
-/// ## tutorial
-/// - https://www.cs.nmsu.edu/~pfeiffer/fuse-tutorial/
+/// ## libfuse tutorial
+/// - https://www.cs.nmsu.edu/~pfeiffer/fuse-tutorial/html/index.html
+/// -
+/// https://maastaar.net/fuse/linux/filesystem/c/2016/05/21/writing-a-simple-filesystem-using-fuse/
 ///
-/// ## libfuse
-/// - @ref fuse_main (argc, argv, fuse_operations *op, user_data=NULL)
+/// ## wear leveling references
+///
+/// - https://github.com/littlefs-project/littlefs-fuse
 ///
 /// @{
 
 #ifndef FUSE_USE_VERSION
-#error FUSE_USE_VERSION=26
+#define FUSE_USE_VERSION 26
 #endif
 
 #include <fuse.h>
 #include <sys/errno.h>
+
+/// @brief https://libfuse.github.io/doxygen/index.html
+/// - `high-level` synchronous API
+/// - `low-level` asynchronous API
+namespace fuse {
+
+/// @brief `fuse_operations`<br>
+/// https://libfuse.github.io/doxygen/structfuse__operations.html
+namespace operations {  //
+
+};
+
+};  // namespace fuse
 
 /// @brief global state
 struct fuse_state {
