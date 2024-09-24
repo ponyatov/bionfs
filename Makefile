@@ -39,7 +39,7 @@ all: bin/$(MODULE)
 run: bin/$(MODULE)
 	$(MAKE) testfs &
 	mkdir -p tmp/mount
-	bin/$(MODULE) -d -s tmp/mount 2> tmp/$(MODULE).log
+	bin/$(MODULE) -d -s tmp/image tmp/mount 2> tmp/$(MODULE).log
 
 .PHONY: testfs
 testfs:
@@ -71,7 +71,7 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
 ref: \
-	ref/littlefs/README.md \
+	ref/littlefs/README.md ref/littlefs-fuse/README.md \
 	ref/spiffs/README.md
 gz:
 
@@ -79,6 +79,8 @@ ref/littlefs/README.md:
 	$(GITREF) https://github.com/littlefs-project/littlefs ref/littlefs
 ref/spiffs/README.md:
 	$(GITREF) https://github.com/pellepl/spiffs.git ref/spiffs
+ref/littlefs-fuse/README.md:
+	$(GITREF) https://github.com/littlefs-project/littlefs-fuse.git ref/littlefs-fuse
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE

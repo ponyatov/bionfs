@@ -34,6 +34,16 @@ extern void arg(int argc, char argv[]);
 #define FUSE_USE_VERSION 30
 #include <fuse.h>
 #include <sys/errno.h>
+
+/// @brief global state
+struct fuse_state {
+    char *imagepath;  ///< absolute path for flash image
+    char *mountpath;  ///< absolute mount point path
+    size_t count;     ///< operations count
+};
+extern fuse_state _state;
+#define state ((fuse_state *)(fuse_get_context()->private_data))
+
 // #include <unistd.h>
 // #include <sys/types.h>
 // #include <time.h>
