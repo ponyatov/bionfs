@@ -28,6 +28,7 @@ H += $(wildcard inc/*.h*)
 # cfg
 CFLAGS += -Iinc -Itmp
 CFLAGS += $(shell pkg-config fuse --cflags)
+CFLAGS += -DFUSE_USE_VERSION=30
 
 # libs
 L += $(shell pkg-config fuse --libs)
@@ -69,8 +70,12 @@ install: doc ref gz
 update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
-ref:
+ref: \
+	ref/littlefs/README.md
 gz:
+
+ref/littlefs/README.md:
+	$(GITREF) https://github.com/littlefs-project/littlefs ref/littlefs
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE
