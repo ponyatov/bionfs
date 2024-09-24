@@ -71,11 +71,14 @@ update:
 	sudo apt update
 	sudo apt install -uy `cat apt.txt`
 ref: \
-	ref/littlefs/README.md
+	ref/littlefs/README.md \
+	ref/spiffs/README.md
 gz:
 
 ref/littlefs/README.md:
 	$(GITREF) https://github.com/littlefs-project/littlefs ref/littlefs
+ref/spiffs/README.md:
+	$(GITREF) https://github.com/pellepl/spiffs.git ref/spiffs
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE
