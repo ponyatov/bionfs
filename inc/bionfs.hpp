@@ -23,7 +23,12 @@ extern void arg(int argc, char argv[]);
 /// @defgroup fuse FUSE
 /// @brief @ref fuse.h
 ///
-/// @ref fuse_main
+/// ## tutorial
+/// - https://www.cs.nmsu.edu/~pfeiffer/fuse-tutorial/
+///
+/// ## libfuse
+/// - @ref fuse_main (argc, argv, fuse_operations *op, user_data=NULL)
+///
 /// @{
 
 #define FUSE_USE_VERSION 30
