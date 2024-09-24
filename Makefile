@@ -28,7 +28,7 @@ H += $(wildcard inc/*.h*)
 # cfg
 CFLAGS += -Iinc -Itmp
 CFLAGS += $(shell pkg-config fuse --cflags)
-CFLAGS += -DFUSE_USE_VERSION=30
+CFLAGS += -DFUSE_USE_VERSION=26
 
 # libs
 L += $(shell pkg-config fuse --libs)
@@ -36,10 +36,14 @@ L += $(shell pkg-config fuse --libs)
 # all
 .PHONY: run all
 all: bin/$(MODULE)
-run: bin/$(MODULE)
-	$(MAKE) testfs &
-	mkdir -p tmp/mount
-	bin/$(MODULE) -d -s tmp/image tmp/mount 2> tmp/$(MODULE).log
+run: bin/$(MODULE) tmp/image tmp/mount
+	bin/$(MODULE) -h
+# $(MAKE) testfs &
+# mkdir -p tmp/mount
+# bin/$(MODULE) -d -s tmp/image tmp/mount 2> tmp/$(MODULE).log
+
+tmp/image:
+	dd if=/dev/zero of=$@ bs=1K count=8
 
 .PHONY: testfs
 testfs:
@@ -72,7 +76,7 @@ update:
 	sudo apt install -uy `cat apt.txt`
 ref: \
 	ref/littlefs/README.md ref/littlefs-fuse/README.md \
-	ref/spiffs/README.md
+	ref/spiffs/README.md ref/Fusepp/README.md
 gz:
 
 ref/littlefs/README.md:
@@ -81,6 +85,8 @@ ref/spiffs/README.md:
 	$(GITREF) https://github.com/pellepl/spiffs.git ref/spiffs
 ref/littlefs-fuse/README.md:
 	$(GITREF) https://github.com/littlefs-project/littlefs-fuse.git ref/littlefs-fuse
+ref/Fusepp/README.md:
+	$(GITREF) -b Fuse-2.9 https://github.com/jachappell/Fusepp.git ref/Fusepp
 
 # merge
 MERGE += Makefile README.md apt.txt LICENSE

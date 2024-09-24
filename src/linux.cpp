@@ -40,18 +40,51 @@ struct fuse_operations operations = {
     // .init = fuse_fs_init,        //
 };
 
+struct bion_config config = {0};
+const char *device = nullptr;
+
+const char help_text[] =
+    "usage: %s [options] device mountpoint\n"
+    "\n";
+
+static struct fuse_opt bion_fuse_opts[] = {
+    FUSE_OPT_KEY("-V", KEY_VERSION), FUSE_OPT_KEY("--version", KEY_VERSION),
+    FUSE_OPT_KEY("-h", KEY_HELP), FUSE_OPT_KEY("--help", KEY_HELP),
+    FUSE_OPT_END};
+
+int bion_fuse_opt_proc(void *data, const char *arg, int key,
+                       struct fuse_args *args) {
+    switch (key) {
+        case FUSE_OPT_KEY_NONOPT:
+            fprintf(stderr, "arg:%s\n", arg);
+            exit(1);
+        case KEY_HELP:
+            fprintf(stderr, help_text, args->argv[0]);
+            fuse_opt_add_arg(args, "-ho");
+            fuse_main(args->argc, args->argv, &operations, NULL);
+            exit(1);
+        default:
+            return 1;
+    }
+}
+
 int main(int argc, char *argv[]) {
     arg(0, argv[0]);
     for (int i = 1; i < argc; i++) {  //
         arg(i, argv[i]);
     }
-    assert(argc >= 3);
-    fprintf(stderr, "\n");
-    assert(_state.imagepath = realpath(argv[argc - 2], NULL));
-    fprintf(stderr, "image: %s\n", _state.imagepath);
-    assert(_state.mountpath = realpath(argv[argc - 1], NULL));
-    fprintf(stderr, "mount: %s\n", _state.mountpath);
-    fprintf(stderr, "\n");
+
+    // assert(argc >= 3);
+    // fprintf(stderr, "\n");
+    // assert(_state.imagepath = realpath(argv[argc - 2], NULL));
+    // fprintf(stderr, "image: %s\n", _state.imagepath);
+    // assert(_state.mountpath = realpath(argv[argc - 1], NULL));
+    // fprintf(stderr, "mount: %s\n", _state.mountpath);
+    // fprintf(stderr, "\n");
+
+    struct fuse_args args = FUSE_ARGS_INIT(argc, argv);
+    fuse_opt_parse(&args, &config, bion_fuse_opts, bion_fuse_opt_proc);
+    assert(device);
 
     return fuse_main(argc, argv, &operations, &_state);
 }

@@ -31,7 +31,10 @@ extern void arg(int argc, char argv[]);
 ///
 /// @{
 
-#define FUSE_USE_VERSION 30
+#ifndef FUSE_USE_VERSION
+#error FUSE_USE_VERSION=26
+#endif
+
 #include <fuse.h>
 #include <sys/errno.h>
 
@@ -48,5 +51,18 @@ extern fuse_state _state;
 // #include <sys/types.h>
 // #include <time.h>
 // #include <string.h>
+
+struct bion_config {
+    void *context;
+};
+
+/// @brief command line options
+enum lfs_fuse_keys {
+    KEY_VERSION,
+    KEY_HELP,
+};
+
+extern const char *device;      ///< device / image file
+extern const char help_text[];  ///< short help text
 
 /// @}
