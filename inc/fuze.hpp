@@ -8,6 +8,7 @@
 #endif
 
 #include <fuse.h>
+#include <string.h>
 
 /// @defgroup fuze fuze
 /// @brief C++ wrapper for `libfuse`
@@ -21,12 +22,25 @@ namespace fuze {
 template <class T>
 class FUSE {
    public:
+    FUSE() {  //
+        memset(&T::operations_, 0, sizeof(T::operations_));
+        // used_operations_();
+    }
+
+    int main(int argc, char *argv[]) {
+        return fuse_main(argc, argv, &T::operations_, this);
+    }
+
     /// @name no copy
     FUSE(const FUSE &) = delete;
     FUSE &operator=(const FUSE &) = delete;
     FUSE &operator=(FUSE &&) = delete;
 
     ~FUSE() = default;
+
+   private:
+    static struct fuse_operations operations_;
+    // static void used_operations_() {}
 };
 
 /// @brief `fuse_operations`<br>
@@ -101,5 +115,8 @@ typedef off_t (*lseek)(const char *, off_t off, int whence,
 };  // namespace operations
 
 };  // namespace fuze
+
+// template <class T>
+// struct fuse_operations fuze::FUSE<T>::operations_;
 
 /// @}

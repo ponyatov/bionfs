@@ -86,7 +86,8 @@ int main(int argc, char *argv[]) {
     // fuse_opt_parse(&args, &config, bion_fuse_opts, bion_fuse_opt_proc);
     // assert(device);
 
-    return (new BION(argv,argv))->run();
+    BION bion;
+    return bion.main(argc, argv);
     // return fuse_main(argc, argv, &operations, &_state);
 }
 
